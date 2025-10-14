@@ -14,6 +14,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "ponto_coleta")
 public class PontoColeta extends DefaultEntity {
+
     @Column(nullable = false)
     private String nome;
 
@@ -21,109 +22,61 @@ public class PontoColeta extends DefaultEntity {
 
     private String email;
 
-    
     @Column(nullable = false)
     private String endereco;
-    
+
     @Column(name = "nome_imagem")
     private String nomeImagem;
-    
+
     @Column(nullable = false)
     private Double latitude;
-    
+
     @Column(nullable = false)
     private Double longitude;
-    
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "id_ponto_coleta", nullable = false)
+
+
+    @OneToMany(mappedBy = "pontoColeta", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Telefone> listaTelefone;
 
     @ManyToMany
-    @JoinTable(name = "material_ponto_coleta",joinColumns = @JoinColumn(name = "id_ponto_coleta"),
-                inverseJoinColumns = @JoinColumn(name = "id_material"))
+    @JoinTable(
+        name = "material_ponto_coleta",
+        joinColumns = @JoinColumn(name = "id_ponto_coleta"),
+        inverseJoinColumns = @JoinColumn(name = "id_material")
+    )
     private List<Material> listaMaterial;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "id_ponto_coleta", nullable = false)
+    @OneToMany(mappedBy = "pontoColeta", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DiaFuncionamento> listaDiaFuncionamento;
 
-    public String getNome() {
-        return nome;
-    }
+    // Getters e setters
+    public String getNome() { return nome; }
+    public void setNome(String nome) { this.nome = nome; }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+    public String getDescricao() { return descricao; }
+    public void setDescricao(String descricao) { this.descricao = descricao; }
 
-    public String getDescricao() {
-        return descricao;
-    }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
+    public String getEndereco() { return endereco; }
+    public void setEndereco(String endereco) { this.endereco = endereco; }
 
-    public String getEmail() {
-        return email;
-    }
+    public String getNomeImagem() { return nomeImagem; }
+    public void setNomeImagem(String nomeImagem) { this.nomeImagem = nomeImagem; }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    public Double getLatitude() { return latitude; }
+    public void setLatitude(Double latitude) { this.latitude = latitude; }
 
-    public String getEndereco() {
-        return endereco;
-    }
+    public Double getLongitude() { return longitude; }
+    public void setLongitude(Double longitude) { this.longitude = longitude; }
 
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
-    }
+    public List<Telefone> getListaTelefone() { return listaTelefone; }
+    public void setListaTelefone(List<Telefone> listaTelefone) { this.listaTelefone = listaTelefone; }
 
-    public String getNomeImagem() {
-        return nomeImagem;
-    }
+    public List<Material> getListaMaterial() { return listaMaterial; }
+    public void setListaMaterial(List<Material> listaMaterial) { this.listaMaterial = listaMaterial; }
 
-    public void setNomeImagem(String nomeImagem) {
-        this.nomeImagem = nomeImagem;
-    }
-
-    public Double getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(Double latitude) {
-        this.latitude = latitude;
-    }
-
-    public Double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(Double longitude) {
-        this.longitude = longitude;
-    }
-
-    public List<Telefone> getListaTelefone() {
-        return listaTelefone;
-    }
-
-    public void setListaTelefone(List<Telefone> listaTelefone) {
-        this.listaTelefone = listaTelefone;
-    }
-
-    public List<Material> getListaMaterial() {
-        return listaMaterial;
-    }
-
-    public void setListaMaterial(List<Material> listaMaterial) {
-        this.listaMaterial = listaMaterial;
-    }
-
-    public List<DiaFuncionamento> getListaDiaFuncionamento() {
-        return listaDiaFuncionamento;
-    }
-
-    public void setListaDiaFuncionamento(List<DiaFuncionamento> listaDiaFuncionamento) {
-        this.listaDiaFuncionamento = listaDiaFuncionamento;
-    }
+    public List<DiaFuncionamento> getListaDiaFuncionamento() { return listaDiaFuncionamento; }
+    public void setListaDiaFuncionamento(List<DiaFuncionamento> listaDiaFuncionamento) { this.listaDiaFuncionamento = listaDiaFuncionamento; }
 }
