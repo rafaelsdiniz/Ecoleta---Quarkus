@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: ecoleta-quarkus
+    env: docker
+    plan: free
+    region: frankfurt
+    dockerfilePath: ./Dockerfile
+    build:
+      context: ./
+    autoDeploy: true
