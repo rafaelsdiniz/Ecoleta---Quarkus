@@ -4,9 +4,17 @@ import java.util.List;
 
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
-import jakarta.ws.rs.*;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import unitins.ecoleta.dto.Request.LoginRequestDTO;
 import unitins.ecoleta.dto.Request.UsuarioRequestDTO;
 import unitins.ecoleta.dto.Response.UsuarioResponseDTO;
 import unitins.ecoleta.service.UsuarioService;
@@ -53,5 +61,19 @@ public class UsuarioResource {
     public Response delete(@PathParam("id") Long id) {
         usuarioService.delete(id);
         return Response.status(Response.Status.NO_CONTENT).build();
+    }
+
+    @POST
+    @Path("/login")
+    public Response login(@Valid LoginRequestDTO dto) {
+        var usuario = usuarioService.autenticar(dto.email(), dto.senha());
+        if (usuario == null) {
+            return Response.status(Response.Status.UNAUTHORIZED)
+                           .entity("E-mail ou senha inválidos.")
+                           .build();
+        }
+
+        // aqui você pode retornar um token JWT, ou só os dados básicos do usuário
+        return Response.ok(usuario).build();
     }
 }

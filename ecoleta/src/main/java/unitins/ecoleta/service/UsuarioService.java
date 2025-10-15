@@ -62,4 +62,16 @@ public class UsuarioService {
     public void delete(Long id) {
         usuarioRepository.deleteById(id);
     }
+
+    public Usuario autenticar(String email, String senha) {
+        Usuario usuario = usuarioRepository.findByEmail(email);
+        if (usuario == null)
+            return null;
+
+        // Exemplo simples: compara direto (ideal: use hash de senha, tipo BCrypt)
+        if (!usuario.getSenha().equals(senha))
+            return null;
+
+        return usuario;
+    }
 }

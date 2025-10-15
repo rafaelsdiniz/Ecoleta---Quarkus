@@ -2,7 +2,6 @@ package unitins.ecoleta.dto.Request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import unitins.ecoleta.model.enums.TipoUsuario;
 
@@ -22,6 +21,5 @@ public record UsuarioRequestDTO(
     @NotBlank(message = "O telefone é obrigatório.")
     String telefone,
 
-    @NotNull(message = "O tipo de usuário é obrigatório.")
     TipoUsuario tipoUsuario
 ) {}
