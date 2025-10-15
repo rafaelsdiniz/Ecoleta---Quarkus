@@ -1,5 +1,11 @@
+# Ignora tudo por padrão
 *
+# Mas mantém o pom.xml e o código-fonte
+!pom.xml
+!src/**
+
+# Mantém os artefatos do Quarkus necessários
 !target/*-runner
 !target/*-runner.jar
-!target/lib/*
-!target/quarkus-app/*
+!target/lib/**
+!target/quarkus-app/**
