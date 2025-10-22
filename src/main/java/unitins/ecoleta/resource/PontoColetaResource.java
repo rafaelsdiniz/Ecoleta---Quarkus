@@ -10,6 +10,7 @@ import java.util.Map;
 import org.jboss.resteasy.reactive.RestForm;
 import org.jboss.resteasy.reactive.multipart.FileUpload;
 
+import jakarta.annotation.security.PermitAll;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
@@ -33,6 +34,7 @@ import unitins.ecoleta.service.PontoColetaService;
 @RequestScoped
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
+@PermitAll
 public class PontoColetaResource {
 
     @Inject
@@ -124,12 +126,12 @@ public class PontoColetaResource {
         }
     }
 
-        @PATCH
+    @PATCH
     @Path("/{id}/image/upload")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response upload(@PathParam("id") Long id,
-                        @RestForm("nomeArquivo") String nomeArquivo,
-                        @RestForm("arquivo") FileUpload arquivo) {
+                          @RestForm("nomeArquivo") String nomeArquivo,
+                          @RestForm("arquivo") FileUpload arquivo) {
 
         if (nomeArquivo == null || nomeArquivo.isBlank()) {
             return Response.status(Response.Status.BAD_REQUEST)
@@ -151,5 +153,5 @@ public class PontoColetaResource {
                     .entity(Map.of("error", "Erro ao processar o upload: " + e.getMessage()))
                     .build();
         }
-}
+    }
 }

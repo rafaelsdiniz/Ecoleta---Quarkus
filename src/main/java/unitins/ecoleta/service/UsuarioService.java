@@ -55,12 +55,7 @@ public class UsuarioService {
         usuario.setNome(dto.nome());
         usuario.setEmail(dto.email());
         if (dto.senha() != null && !dto.senha().isEmpty()) {
-            // Check if password is already a BCrypt hash (starts with $2a$, $2b$, or $2y$)
-            if (!dto.senha().startsWith("$2")) {
-                usuario.setSenha(hashService.hashPassword(dto.senha()));
-            } else {
-                usuario.setSenha(dto.senha());
-            }
+            usuario.setSenha(hashService.hashPassword(dto.senha()));
         }
         usuario.setTelefone(dto.telefone());
         usuario.setTipoUsuario(dto.tipoUsuario());
