@@ -2,25 +2,26 @@
 FROM maven:3.9.9-eclipse-temurin-17 AS build
 WORKDIR /app
 
-# Copia o pom.xml e baixa dependências antes de copiar o código-fonte
+# Copia o pom.xml e baixa dependências
 COPY pom.xml .
 RUN mvn dependency:go-offline -B
 
-# Copia o restante do código e constrói o projeto
+# Copia o código-fonte e constrói o projeto
 COPY src ./src
 RUN mvn package -DskipTests
 
-# Etapa 2: Imagem final para rodar a aplicação
+# Etapa 2: Imagem final
 FROM eclipse-temurin:17-jdk-jammy
 WORKDIR /app
 
-# Copia o .jar gerado da etapa anterior
-COPY --from=build /app/target/quarkus-app/lib/ /app/lib/
-COPY --from=build /app/target/quarkus-app/*.jar /app/
-COPY --from=build /app/target/quarkus-app/app/ /app/app/
-COPY --from=build /app/target/quarkus-app/quarkus/ /app/quarkus/
+# Copia toda a estrutura fast-jar
+COPY --from=build /app/target/quarkus-app/ ./
 
+# Porta padrão Quarkus
 EXPOSE 8080
+
+# Host para funcionar no Railway
 ENV JAVA_OPTS="-Dquarkus.http.host=0.0.0.0"
 
-ENTRYPOINT ["java", "-jar", "/app/quarkus-run.jar"]
+# Comando correto para fast-jar
+CMD ["java", "-jar", "quarkus-run.jar"]
